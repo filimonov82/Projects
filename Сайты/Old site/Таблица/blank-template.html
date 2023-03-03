@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Planets data</title>
+    <link href="minimal-table.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <h1>Planets data</h1>
+    <table>
+      <caption>
+        Data about the planets of our solar system (Planetary facts taken from <a href="http://nssdc.gsfc.nasa.gov/planetary/factsheet/">Nasa's Planetary Fact Sheet - Metric</a>).
+      </caption>
+      <colgroup>
+        <col span="2">
+        <col style="border: 2px solid black;">
+        <col span="9">
+      </colgroup>
+    <thead>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+        <th id="name">Name</th>
+        <th id="mass">Mass (10<sup>24</sup>kg)</th>
+        <th id="diameter">Diameter (km)</th>
+        <th id="density">Density (kg/m<sup>3</sup>)</th>
+        <th id="gravity">Gravity (m/s<sup>2</sup>)</th>
+        <th id="length">Length of day (hours)</th>
+        <th id="distance">Distance from Sun (10<sup>6</sup>km)</th>
+        <th id="temp">Mean temperature (°C)</th>
+        <th id="number">Number of moons</th>
+        <th id="notes">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th colspan="2" rowspan="4" id="terr-planets">Terrestrial planets</th>
+        <td headers="terr-planets name">Mercury</td>
+        <td headers="terr-planets mass">0.33</td>
+        <td headers="terr-planets diameter">4879</td>
+        <td headers="terr-planets density">5427</td>
+        <td headers="terr-planets gravity">3.7</td>
+        <td headers="terr-planets length">4222.6</td>
+        <td headers="terr-planets distance">57.9</td>
+        <td headers="terr-planets temp">167</td>
+        <td headers="terr-planets number">0</td>
+        <td headers="terr-planets notes">Closest to the Sun</td>
+      </tr>
+      <tr>
+        <td headers="terr-planets name">Venus</td>
+        <td headers="terr-planets mass">4.87</td>
+        <td headers="terr-planets diameter">12104</td>
+        <td headers="terr-planets density">5243</td>
+        <td headers="terr-planets gravity">8.9</td>
+        <td headers="terr-planets length">2802</td>
+        <td headers="terr-planets distance">108.2</td>
+        <td headers="terr-planets temp">464</td>
+        <td headers="terr-planets number">0</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td headers="terr-planets name">Earth </td>
+        <td headers="terr-planets mass">5.97</td>
+        <td headers="terr-planets diameter">12756</td>
+        <td headers="terr-planets density">5514</td>
+        <td headers="terr-planets gravity">9.8</td>
+        <td headers="terr-planets length">24</td>
+        <td headers="terr-planets distance">149.6</td>
+        <td headers="terr-planets temp">15</td>
+        <td headers="terr-planets number">1</td>
+        <td headers="terr-planets notes">Our world</td>
+      </tr>
+      <tr>
+        <td headers="terr-planets name">Mars</td>
+        <td headers="terr-planets mass">0.642</td>
+        <td headers="terr-planets diameter">6792</td>
+        <td headers="terr-planets density">3933</td>
+        <td headers="terr-planets gravity">3.7</td>
+        <td headers="terr-planets length">24.7</td>
+        <td headers="terr-planets distance">227.9</td>
+        <td headers="terr-planets temp">-65</td>
+        <td headers="terr-planets number">2</td>
+        <td headers="terr-planets notes">The red planet</td>
+      </tr>
+      <tr>
+        <th rowspan="4" id="jov-planets">Jovian planets</th>
+        <th rowspan="2" id="gas-giants">Gas giants</th>
+        <td headers="jov-planets gas-gaints name">Jupiter </td>
+        <td headers="jov-planets gas-gaints mass">1898</td>
+        <td headers="jov-planets gas-gaints diameter">142984</td>
+        <td headers="jov-planets gas-gaints density">1326</td>
+        <td headers="jov-planets gas-gaints gravity">23.1</td>
+        <td headers="jov-planets gas-gaints length">9.9</td>
+        <td headers="jov-planets gas-gaints distance">778.6</td>
+        <td headers="jov-planets gas-gaints temp">-110</td>
+        <td headers="jov-planets gas-gaints number">67</td>
+        <td headers="jov-planets gas-gaints notes">The largest planet</td>
+      </tr>
+      <tr>
+        <td headers="jov-planets gas-gaints name">Saturn</td>
+        <td headers="jov-planets gas-gaints mass">568</td>
+        <td headers="jov-planets gas-gaints diameter">120536</td>
+        <td headers="jov-planets gas-gaints density">687</td>
+        <td headers="jov-planets gas-gaints gravity">9</td>
+        <td headers="jov-planets gas-gaints length">10.7</td>
+        <td headers="jov-planets gas-gaints distance">1433.5</td>
+        <td headers="jov-planets gas-gaints temp">-140</td>
+        <td headers="jov-planets gas-gaints number">62</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th rowspan="2" id="ice-giants">Ice giants</th>
+        <td headers="jov-planets ice-gaints name">Uranus</td>
+        <td headers="jov-planets ice-gaints mass">86.8</td>
+        <td headers="jov-planets ice-gaints diameter">51118</td>
+        <td headers="jov-planets ice-gaints density">1271</td>
+        <td headers="jov-planets ice-gaints gravity">8.7</td>
+        <td headers="jov-planets ice-gaints length">17.2</td>
+        <td headers="jov-planets ice-gaints distance">2872.5</td>
+        <td headers="jov-planets ice-gaints temp">-195</td>
+        <td headers="jov-planets ice-gaints number">27</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td headers="jov-planets ice-gaints name">Neptune</td>
+        <td headers="jov-planets ice-gaints mass">102</td>
+        <td headers="jov-planets ice-gaints diameter">49528</td>
+        <td headers="jov-planets ice-gaints density">1638</td>
+        <td headers="jov-planets ice-gaints gravity">11</td>
+        <td headers="jov-planets ice-gaints length">16.1</td>
+        <td headers="jov-planets ice-gaints distance">4495.1</td>
+        <td headers="jov-planets ice-gaints temp">-200</td>
+        <td headers="jov-planets ice-gaints number">14</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <th colspan="2" id="dwarf-planets">Dwarf planets</th>
+        <td headers="dwarf-planets name">Pluto</td>
+        <td headers="dwarf-planets mass">0.0146</td>
+        <td headers="dwarf-planets diameter">2370</td>
+        <td headers="dwarf-planets density">2095</td>
+        <td headers="dwarf-planets gravity">0.7</td>
+        <td headers="dwarf-planets length">153.3</td>
+        <td headers="dwarf-planets distance">5906.4</td>
+        <td headers="dwarf-planets temp">-225</td>
+        <td headers="dwarf-planets number">5</td>
+        <td headers="dwarf-planets notes">Declassified as a planet in 2006, but this <a href="http://www.usatoday.com/story/tech/2014/10/02/pluto-planet-solar-system/16578959/">remains controversial</a></td>
+      </tr>
+    </tbody>  
+    </table>
+  </body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<link href="style/style.css" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap" rel="stylesheet">
+		<link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+		<meta charset="utf-8">
+		<meta name="author" content="Филимонов Андрей">
+		<meta name="description" content="Мой первый сайт">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta property="og:image" content="images\untitled.png">
+		<meta property="og:description" content="Мой тестовый сайт">
+		<meta property="og:title" content="Мой сайт">
+		<meta name="viewport" content="width=device-width">
+		<title> Леха пошел нахуй </title>
+	</head>
+	<body>
+		<header>
+			<a id="top"></a>	
+		</header>
+		
+		<h1>Леха пошел нахуй</h1>
+
+		<nav>
+			<ul>
+				<li><a href="index.html">Домой</a></li>
+				<li><a href="pictures.html">Изображения</a></li>
+			</ul>
+		</nav>
+
+		<main>
+			<aside>
+				<ul>
+					<li><a href="#top">наверх</a></li>
+					<li><a href="#bottom">вниз</a></li>
+				</ul>
+			</aside>
+
+			<picture>
+				<source media="(max-width: 599px)" srcset="brige2.jpg">
+				<source media="(min-width: 600px)" srcset="brige.jpg">
+				<img src="brige.jpg" alt="Brige">
+			</picture>
+			
+			<article>
+				<p>Пирс (англ. piers — множественное число от англ. pier — «столб; мол; пристань; причал») — гидротехническое сооружение, выступающее в акваторию водоёма (реки, озера, моря, океана) и имеющее весьма разнообразное предназначение.</p>
+			</article>
+
+			<img srcset="picture-260.jpg 260w,
+						 picture-336.jpg 336w"
+				 sizes="(max-width: 260px) 220px,
+						336px"
+				 src="picture-450.png" alt="Alaska">
+
+			<video controls
+				   width="320"
+				   height="240"
+			       poster="images/untitled.png">
+				<source src="rabbit.mp4" type="video/mp4">
+				<source src="rabbit.webm" type="video/webm">
+				<!--<track kind="subtitles" src="Sub.vtt" srclang="en">-->
+				<p>Your browser doesn't support this content</p>
+			</video>
+
+			<p><abbr title="Леха пошел нахуй">ЛПН</abbr></p>
+
+			<audio controls>
+				<source src="viper.mp3" type="audio/mp3">
+				<source src="viper.ogg" type="audio/ogg">
+				<p>Your browser doesn't support this content</p>
+			</audio>
+
+			<p>л<sup>е</sup>х<sub>а</sub></p>
+
+			<p>Это разделение текста<br>
+				С помощью br <br>
+			</p>
+			<hr>
+			<p>А это горизонтальный разделитель</p>
+
+			<h2>Комментарии:</h2>
+		
+			<dl>
+				<dt class="name"><strong>Владислав Мартыненков</strong></dt>
+				<dd class="comment">полностью согласен</dd>
+				<dt class="name"><strong>Филимонов Андрей</strong></dt>
+				<dd class="comment">присоединяюсь</dd>
+				<dt class="name"><strong>Вера Абуашвилли</strong></dt>
+				<dd class="comment">ахахах</dd>
+			</dl>
+
+			<h2>Мы в соцсетях:</h2>
+
+			<ul>
+				<li>twitter</li>
+				<li><a href = "https://vk.com/myakusshka">vk</a></li>
+				<li>google+</li>
+			</ul>
+
+			<button>Сменить пользователя</button>
+
+			<p><a href="mailto:andr7295@gmail.com?subject=Леха%20пошел%20нахуй">Обратная связь</a></p>
+
+			<a id="bottom"></a>
+
+		</main>
+
+		<footer>
+			<p>©Авторские права никому не принадлежат, 2022. Все права защищены.</p>
+		</footer>
+
+		<script src="scripts/main.js"></script>
+	</body>
+</html>
