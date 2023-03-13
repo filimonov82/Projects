@@ -664,3 +664,182 @@ def test_exception1():
 pytest.fail('') хранит сообщение, которое выводится при ошибке (assert способ также работает).
 
 Использование фикстур в PyTest-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Фикстуры в контексте PyTest — это вспомогательные функции для наших тестов, которые не являются частью тестового сценария.
+Назначение фикстур может быть самым разным. Одно из распространенных применений фикстур — это подготовка тестового окружения и очистка тестового окружения и данных после завершения теста (исполнение команд до
+запуска тестового метода, и после).
+Фикстуры можно использовать для самых разных целей: для подключения к базе данных, с которой работают тесты, создания тестовых файлов или подготовки данных в текущем окружении с помощью API-методов.
+
+Создание setup_ и teardown_ методов - классическое использование фикстур. setup_class() будет исполняться автоматически в начале работы с классом, а teardown_class() запустится сам в конце.
+Если использовать не setup_class и teardown_class, а setup_method и teardown_method, то они будут выполняться при вызове каждого прочего метода (то есть, теста), и после вызова соответственно.
+
+В setup можно вынести открытие браузера, а в teardown его закрытие, чтоб не писать это для каждого теста вручную.
+
+Тесты мы будем объединять в тест-сьюты (тестовые классы).
+
+Следующий код будет открывать браузер в самом начале работы с тест-сьютом, и закрывать его в самом конце.
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+link = "http://selenium1py.pythonanywhere.com/"
+
+
+class TestMainPage1():
+
+    @classmethod
+    def setup_class(self):
+        print("\nstart browser for test suite..")
+        self.browser = webdriver.Chrome()
+
+    @classmethod
+    def teardown_class(self):
+        print("quit browser for test suite..")
+        self.browser.quit()
+
+    def test_guest_should_see_login_link(self):
+        self.browser.get(link)
+        self.browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+    def test_guest_should_see_basket_link_on_the_main_page(self):
+        self.browser.get(link)
+        self.browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+Это не очень оптимально, потому что прошлые тесты могут через кэш повлиять на следующие, либо вообще крашнуть браузер.
+Тут также использовался декоратор.
+
+Поэтому лучше открывать по браузеру для каждого теста:
+
+class TestMainPage2():
+
+    def setup_method(self):
+        print("start browser for test..")
+        self.browser = webdriver.Chrome()
+
+    def teardown_method(self):
+        print("quit browser for test..")
+        self.browser.quit()
+
+    def test_guest_should_see_login_link(self):
+        self.browser.get(link)
+        self.browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+    def test_guest_should_see_basket_link_on_the_main_page(self):
+        self.browser.get(link)
+        self.browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+Среди минусов способа - более долгая работа тестов.
+
+Фикстуры, возвращающие значение----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Это был базовый подход к созданию фикстур.
+PyTest предлагает дополнительные инструменты для работы с фикстурами.
+
+Сейчас мы создадим фикстуру browser, которая будет создавать объект WebDriver.
+Для этого напишем метод browser и укажем, что он является фикстурой, с помощью декоратора @pytest.fixture
+После этого мы сможем передавать фикстуру как параметр тестов, чтобы там вызывать ее.
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+link = "http://selenium1py.pythonanywhere.com/"
+
+
+@pytest.fixture
+def browser():
+    print("\nstart browser for test..")
+    browser = webdriver.Chrome()
+    return browser
+
+
+class TestMainPage1():
+    # вызываем фикстуру в тесте, передав ее как параметр
+    def test_guest_should_see_login_link(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+    def test_guest_should_see_basket_link_on_the_main_page(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+Запуск pytest с флагом -s покажет принты.
+
+В данном случае у нас открывались браузеры, но не закрывались, и закрылись лишь после окончания тестов, благодаря сборщику мусора pytest.
+Но, чтобы память не кончилась, нужно явно закрывать окна.
+Мы будем использовать для этого финализатор.
+Один из вариантов - использование yield.
+После завершения теста, который вызывал фикстуру, выполнение фикстуры продолжится со строки, следующей за строкой со словом yield:
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+link = "http://selenium1py.pythonanywhere.com/"
+
+
+@pytest.fixture
+def browser():
+    print("\nstart browser for test..")
+    browser = webdriver.Chrome()
+    yield browser
+    # этот код выполнится после завершения теста
+    print("\nquit browser..")
+    browser.quit()
+
+
+class TestMainPage1():
+    # вызываем фикстуру в тесте, передав ее как параметр
+    def test_guest_should_see_login_link(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+    def test_guest_should_see_basket_link_on_the_main_page(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+Видимо, декоратор включает в себя next() или for, чтобы работа кода после yield продолжилась.
+Финализатор выполнится, даже если тест упал с ошибкой.
+
+Есть также способ через встроенную фикстуру request и ее метода addfinalizer, но это не разбиралось, можно прочесть в документации (https://docs.pytest.org/en/latest/how-to/fixtures.html#adding-finalizers-directly).
+
+Область видимости (scope)----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Для фикстур можно задавать область покрытия фикстур. Допустимые значения: “function”, “class”, “module”, “session”.
+Соответственно, фикстура будет вызываться один раз для тестового метода, один раз для класса, один раз для модуля(файл с тестами) или один раз для всех тестов, запущенных в данной сессии (все файлы с тестами).
+Задается он так:
+@pytest.fixture(scope="class")
+
+Автоиспользование фикстур----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+При описании фикстуры можно указать дополнительный параметр autouse=True, который укажет, что фикстуру нужно запустить для каждого теста даже без явного вызова:
+@pytest.fixture(autouse=True)
+С таким параметром фикстура выполнится для каждого теста без передачи параметров, вызова, или чего либо.
+Нужно быть аккуратнее с этим параметром, потому что фикстура выполняется для всех тестов. Без явной необходимости автоиспользованием фикстур лучше не пользоваться.
+
+Маркировка тестов в PyTest---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Когда тестов становится много, практично их разметить по категориям (вроде критичные /smoke/, для прогона после каждого коммита, некритичные /regression/, для прогона перед релизом, и т.д.).
+С помощью меток marks мы можем помечать тесты, и делать выборочный запуск.
+Для маркировки теста нужно написать над ним декоратор вида @pytest.mark.mark_name, где mark_name — произвольная строка:
+class TestMainPage1():
+
+    @pytest.mark.smoke
+    def test_guest_should_see_login_link(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, "#login_link")
+
+    @pytest.mark.regression
+    def test_guest_should_see_basket_link_on_the_main_page(self, browser):
+        browser.get(link)
+        browser.find_element(By.CSS_SELECTOR, ".basket-mini .btn-group > a")
+
+Для выборочного запуска тестов с определенной маркировкой нужно добавить при запуске флаг -m + имя метки:
+pytest -s -v -m smoke test_fixture8.py
+
+При этом появится предупреждение о использовании незарегистрированных меток. Это необходимо для того, чтобы избежать опечаток.
+
+Для регистрации метки надо создать файл pytest.ini в той директории, где лежит файл с тестами и прописать там следующее:
+[pytest]
+markers =
+    smoke: marker for smoke tests
+    regression: marker for regression tests
+Описание меток необязательно.
+После этого предупреждения не будет, пока не будет сделана какая-то ошибка.
+
+Маркировать можно не только отдельные тесты, но и тестовый класс, тогда метка будет применена ко всем тестам в тест-сьюте.
+
